@@ -4,6 +4,9 @@ build
 *.npz
 __pycache__
 venv
+.planning/
+.omc/
+.omx/
 docs/_build
 **/Cargo.lock
 **/target

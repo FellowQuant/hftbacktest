@@ -1,4 +1,4 @@
-from typing import List, Any
+from typing import Any, List
 
 import numpy as np
 from numpy.typing import NDArray
@@ -7,16 +7,16 @@ from ._hftbacktest import (
     BacktestAsset as BacktestAsset_,
     build_hashmap_backtest,
     build_roivec_backtest,
-    LiveInstrument
+    LiveInstrument,
 )
 from .binding import (
     HashMapMarketDepthBacktest_,
     HashMapMarketDepthBacktest as HashMapMarketDepthBacktest_TypeHint,
     ROIVectorMarketDepthBacktest_,
     ROIVectorMarketDepthBacktest as ROIVectorMarketDepthBacktest_TypeHint,
-
-    event_dtype
+    event_dtype,
 )
+from .fellowquant import run_fq_simulation
 from .order import (
     BUY,
     SELL,
@@ -46,73 +46,59 @@ from .types import (
     EXCH_EVENT,
     LOCAL_EVENT,
     BUY_EVENT,
-    SELL_EVENT
+    SELL_EVENT,
 )
+
 try:
-    from ._hftbacktest import (
-        build_hashmap_livebot,
-        build_roivec_livebot
-    )
+    from ._hftbacktest import build_hashmap_livebot, build_roivec_livebot
     from .binding import (
         HashMapMarketDepthLiveBot_,
         HashMapMarketDepthLiveBot as HashMapMarketDepthLiveBot_TypeHint,
         ROIVectorMarketDepthLiveBot_,
         ROIVectorMarketDepthLiveBot as ROIVectorMarketDepthLiveBot_TypeHint,
     )
+
     LIVE_FEATURE = True
-except:
+except ImportError:
     LIVE_FEATURE = False
 
 __all__ = (
-    'BacktestAsset',
-    'HashMapMarketDepthBacktest',
-    'ROIVectorMarketDepthBacktest',
-
-    'LiveInstrument',
-    'HashMapMarketDepthLiveBot',
-    'ROIVectorMarketDepthLiveBot',
-
-    'ALL_ASSETS',
-
-    # Event flags
-    'DEPTH_EVENT',
-    'TRADE_EVENT',
-    'DEPTH_CLEAR_EVENT',
-    'DEPTH_SNAPSHOT_EVENT',
-    'DEPTH_BBO_EVENT',
-    'ADD_ORDER_EVENT',
-    'CANCEL_ORDER_EVENT',
-    'MODIFY_ORDER_EVENT',
-    'FILL_EVENT',
-    'EXCH_EVENT',
-    'LOCAL_EVENT',
-    'EXCH_EVENT',
-    'LOCAL_EVENT',
-    'BUY_EVENT',
-    'SELL_EVENT',
-
-    # Side
-    'BUY',
-    'SELL',
-
-    # Order status
-    'NONE',
-    'NEW',
-    'EXPIRED',
-    'FILLED',
-    'CANCELED',
-
-    # Time-In-Force
-    'GTC',
-    'GTX',
-
-    'LIMIT',
-    'MARKET',
-    
-    'Recorder'
+    "BacktestAsset",
+    "HashMapMarketDepthBacktest",
+    "ROIVectorMarketDepthBacktest",
+    "LiveInstrument",
+    "HashMapMarketDepthLiveBot",
+    "ROIVectorMarketDepthLiveBot",
+    "ALL_ASSETS",
+    "DEPTH_EVENT",
+    "TRADE_EVENT",
+    "DEPTH_CLEAR_EVENT",
+    "DEPTH_SNAPSHOT_EVENT",
+    "DEPTH_BBO_EVENT",
+    "ADD_ORDER_EVENT",
+    "CANCEL_ORDER_EVENT",
+    "MODIFY_ORDER_EVENT",
+    "FILL_EVENT",
+    "EXCH_EVENT",
+    "LOCAL_EVENT",
+    "BUY_EVENT",
+    "SELL_EVENT",
+    "BUY",
+    "SELL",
+    "NONE",
+    "NEW",
+    "EXPIRED",
+    "FILLED",
+    "CANCELED",
+    "GTC",
+    "GTX",
+    "LIMIT",
+    "MARKET",
+    "Recorder",
+    "run_fq_simulation",
 )
 
-__version__ = '2.4.4'
+__version__ = "2.4.4"
 
 
 class BacktestAsset(BacktestAsset_):
@@ -187,7 +173,7 @@ class BacktestAsset(BacktestAsset_):
 
 
 def HashMapMarketDepthBacktest(
-        assets: List[BacktestAsset]
+    assets: List[BacktestAsset],
 ) -> HashMapMarketDepthBacktest_TypeHint:
     """
     Constructs an instance of `HashMapMarketDepthBacktest`.
@@ -203,7 +189,7 @@ def HashMapMarketDepthBacktest(
 
 
 def ROIVectorMarketDepthBacktest(
-        assets: List[BacktestAsset]
+    assets: List[BacktestAsset],
 ) -> ROIVectorMarketDepthBacktest_TypeHint:
     """
     Constructs an instance of `ROIVectorMarketBacktest`.
@@ -219,8 +205,9 @@ def ROIVectorMarketDepthBacktest(
 
 
 if LIVE_FEATURE:
+
     def ROIVectorMarketDepthLiveBot(
-            assets: List[LiveInstrument]
+        assets: List[LiveInstrument],
     ) -> ROIVectorMarketDepthLiveBot_TypeHint:
         """
         Constructs an instance of `ROIVectorMarketDepthLiveBot`.
